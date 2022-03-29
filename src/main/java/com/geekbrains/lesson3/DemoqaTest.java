@@ -18,14 +18,14 @@ public class DemoqaTest {
         Actions actionProvider = new Actions(driver);
         driver.manage().window().maximize();
         //driver.manage().window().setSize(new Dimension(300, 700));
-        
+
         driver.get("https://demoqa.com/automation-practice-form");
         driver.findElement(By.id("firstName")).sendKeys("Jon");
         driver.findElement(By.id("lastName")).sendKeys("Smith");
         driver.findElement(By.id("userEmail")).sendKeys("name@example.com");
         driver.findElement(By.xpath("//label[@for='gender-radio-1']")).click();
         driver.findElement(By.id("userNumber")).sendKeys("9101234567");
-         driver.findElement(By.id("dateOfBirthInput")).click();
+        driver.findElement(By.id("dateOfBirthInput")).click();
         driver.findElement(By.xpath("//select[@class='react-datepicker__year-select']")).click();
 
         for (int i = 0; i < 240; i++) {
@@ -61,7 +61,7 @@ public class DemoqaTest {
         WebElement buttonSubmit = driver.findElement(By.xpath("//button[@id='submit']"));
         actionProvider.moveToElement(buttonSubmit).build().perform();
 
-        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
         driver.findElement(By.id("submit")).click();
 
