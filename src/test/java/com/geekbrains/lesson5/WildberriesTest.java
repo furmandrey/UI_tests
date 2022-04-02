@@ -2,10 +2,7 @@ package com.geekbrains.lesson5;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -48,7 +45,7 @@ public class WildberriesTest {
                 "/smartfony-i-telefony\"]")));
         driver.findElement(By.xpath("//a[@href=\"/catalog/elektronika/smartfony-i-telefony\"]")).click();
         driver.findElement(By.xpath("//a[@href=\"/catalog/elektronika/smartfony-i-telefony/vse-smartfony\"]")).click();
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[.='Модель']//ancestor::div" +
+        new WebDriverWait(driver, Duration.ofSeconds(60)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[.='Модель']//ancestor::div" +
                 "[1]/following-sibling::div/div/input")));
         driver.findElement(By.xpath("//span[.='Модель']//ancestor::div[1]/following-sibling::div/div/input")).sendKeys("m52");
 
@@ -66,15 +63,19 @@ public class WildberriesTest {
     }
 
     @Test
-    void isBannerOfBrandShownTrue() throws InterruptedException {
-        Thread.sleep(20000);
+    void isBannerOfBrandShownTrue()  {
         String name = "Mango";
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        Thread.sleep(2000);
-        ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -550)");
+        while (driver.findElements(By.xpath("//img[@class='j-lazy-img-brands']")).size() == 0) {
+            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1500)");
+            try {
+                //new WebDriverWait(driver, Duration.ofSeconds(1))
+                        webDriverWait.until(d -> d.findElements(By.xpath("//img[@class='j-lazy-img-brands']")).size() > 0);
+            } catch (WebDriverException e) {
+            }
+        }
         List<WebElement> bannersList = driver.findElements(By.xpath("//img[@class='j-lazy-img-brands']"));
-        Thread.sleep(15000);
         bannersList.stream().filter(f -> f.getAttribute("alt").contains(name)).findFirst().get().click();
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='name']/h1")));
 
         Assertions.assertEquals(driver.findElement(By.xpath("//div[@id='name']/h1")).getText(), "Каталог " + name);
     }
