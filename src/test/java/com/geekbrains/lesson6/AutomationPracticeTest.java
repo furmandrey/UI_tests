@@ -2,10 +2,8 @@ package com.geekbrains.lesson6;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class AutomationPracticeTest {
     WebDriver driver;
@@ -59,6 +56,13 @@ public class AutomationPracticeTest {
     @Test
     void placeOrder() {
         new SuggestBlock(driver).clickSuggestBlockByName("Dresses");
+        new Dresses(driver).clickEveningDressesInDressesBlock()
+                .clickCheckBox_S()
+                .clickCheckBox_L()
+                .clickCheckBox_M()
+                .clickCheckBoxBeige()
+                .clickCheckBoxPink()
+                .hoverAndClickProductByName("Printed Dress");
 
     }
 
