@@ -7,11 +7,16 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AutomationPracticeTest {
     WebDriver driver;
@@ -73,11 +78,27 @@ public class AutomationPracticeTest {
                 .clickButtonIConfirmMyOrder();
         Assertions.assertEquals(driver.findElement(By.xpath("//p[@class='cheque-indent']/strong")).getText(), "Your " +
                 "order on My Store is complete.");
-        //System.out.println();
+
 
     }
 
+    @Test
+    void checkAddToCart(){
+        new SuggestBlock(driver).clickSuggestBlockByName("Dresses");
+        new Dresses(driver).clickEveningDressesInDressesBlock()
+                .clickCheckBox_S()
+                .clickCheckBoxBeige()
+                .hoverAndClickProductByName("Printed Dress");
 
+        wait.until(ExpectedConditions.visibilityOf(EveningDresses.confirmationText));
+
+        Assertions.assertAll(
+                () -> assertTrue(EveningDresses.confirmationText
+                .getText()
+                .contains("Product successfully added to your shopping cart")),
+                () -> assertNotEquals(driver.findElement(By.xpath("//i[@class='icon-ok']")), null)
+        );
+    }
 
 
     @AfterEach

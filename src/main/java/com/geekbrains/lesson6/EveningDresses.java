@@ -74,5 +74,8 @@ public class EveningDresses extends Basic {
         return new OrderSummary(driver);
     }
 
+    @FindBy(xpath = "//i[@class='icon-ok']/ancestor::h2")
+    public static WebElement confirmationText;
+
 
 }
