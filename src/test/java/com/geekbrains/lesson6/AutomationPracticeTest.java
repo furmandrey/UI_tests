@@ -2,6 +2,7 @@ package com.geekbrains.lesson6;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -62,14 +63,21 @@ public class AutomationPracticeTest {
                 .clickCheckBox_M()
                 .clickCheckBoxBeige()
                 .clickCheckBoxPink()
-                .hoverAndClickProductByName("Printed Dress");
+                .hoverAndClickProductByName("Printed Dress")
+                .clickProceedToCheckout()
+                .clickProceedToCheckout()
+                .clickProceedToCheckout()
+                .clickcheckBoxTermsOfService()
+                .clickProceedToCheckout()
+                .clickButtonPayByBankWire()
+                .clickButtonIConfirmMyOrder();
+        Assertions.assertEquals(driver.findElement(By.xpath("//p[@class='cheque-indent']/strong")).getText(), "Your " +
+                "order on My Store is complete.");
+        //System.out.println();
 
     }
 
-    @Test
-    void ttt(){
 
-    }
 
 
     @AfterEach

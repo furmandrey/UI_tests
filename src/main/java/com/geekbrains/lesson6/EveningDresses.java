@@ -3,6 +3,7 @@ package com.geekbrains.lesson6;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -61,6 +62,15 @@ public class EveningDresses extends Basic {
         actions.moveToElement(productList.stream().filter(p -> p.getText().contains(name)).findFirst().get()).build().perform();
         addToCartAfterHover.click();
         return this;
+    }
+
+    @FindBy(xpath = "//span[contains(., 'Proceed to checkout')]")
+    private WebElement buttonProceedToCheckout;
+
+    public OrderSummary clickProceedToCheckout(){
+        wait.until(ExpectedConditions.visibilityOf(buttonProceedToCheckout));
+        buttonProceedToCheckout.click();
+        return new OrderSummary(driver);
     }
 
 
