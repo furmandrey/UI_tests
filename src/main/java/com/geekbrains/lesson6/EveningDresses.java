@@ -1,5 +1,6 @@
 package com.geekbrains.lesson6;
 
+import com.geekbrains.lesson6.order.OrderSummary;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
