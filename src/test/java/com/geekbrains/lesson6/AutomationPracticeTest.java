@@ -1,12 +1,20 @@
 package com.geekbrains.lesson6;
 
+import com.geekbrains.lesson7.CustomLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -17,7 +25,7 @@ import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+@Feature("Tests Adding to Cart")
 public class AutomationPracticeTest {
     WebDriver driver;
     WebDriverWait wait;
@@ -42,7 +50,7 @@ public class AutomationPracticeTest {
 
     @BeforeEach
     void setDriver() {
-        driver = new ChromeDriver();
+        driver = new EventFiringDecorator(new CustomLogger()).decorate(new ChromeDriver());
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         actionProvider = new Actions(driver);
         driver.manage().window().maximize();
@@ -53,13 +61,15 @@ public class AutomationPracticeTest {
     }
 
     @Test
+    @Story("Logging with cookies")
     void logInWithCookie() {
         new MainPage(driver);
-        Assertions.assertEquals(MainPage.logoName(), LOGO_NAME);
+        Assertions.assertEquals(MainPage.logName(), LOGO_NAME);
         //Assertions.assertEquals(MainPage.logoNameField.getText(), LOGO_NAME);//Вопрос 1
     }
 
     @Test
+    @Story("Placing the order with one item")
     void placeOrder() {
         new SuggestBlock(driver).clickSuggestBlockByName("Dresses");
         new Dresses(driver).clickEveningDressesInDressesBlock()
@@ -81,6 +91,7 @@ public class AutomationPracticeTest {
     }
 
     @Test
+    @Story("Check adding one item to cart")
     void checkAddToCart(){
         new SuggestBlock(driver).clickSuggestBlockByName("Dresses");
         new Dresses(driver).clickEveningDressesInDressesBlock()
@@ -101,6 +112,7 @@ public class AutomationPracticeTest {
     }
 
     @Test
+    @Story("Check adding two item to cart")
     void addTowGoodsToCart()  {
         new SuggestBlock(driver)
                 .hoverSuggestBlockByName("Dresses")
@@ -123,6 +135,11 @@ public class AutomationPracticeTest {
 
     @AfterEach
     void tearDown() {
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+
+        for (LogEntry log : logEntries){
+            Allure.addAttachment("Элемент лога браузера", log.getMessage());
+        }
         driver.quit();
     }
 
