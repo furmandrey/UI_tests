@@ -78,8 +78,6 @@ public class AutomationPracticeTest {
                 .clickButtonIConfirmMyOrder();
         Assertions.assertEquals(driver.findElement(By.xpath("//p[@class='cheque-indent']/strong")).getText(), "Your " +
                 "order on My Store is complete.");
-
-
     }
 
     @Test
@@ -98,6 +96,28 @@ public class AutomationPracticeTest {
                 .contains("Product successfully added to your shopping cart")),
                 () -> assertNotEquals(driver.findElement(By.xpath("//i[@class='icon-ok']")), null)
         );
+
+
+    }
+
+    @Test
+    void addTowGoodsToCart()  {
+        new SuggestBlock(driver)
+                .hoverSuggestBlockByName("Dresses")
+                .clickEveningDressesInsideMenu()
+                .clickCheckBox_M()
+                .clickCheckBoxPink()
+                .hoverAndClickProductByName("Printed Dress")
+                .clickButtonContinueShopping();
+        new SuggestBlock(driver).clickSuggestBlockByName("T-shirts");
+        new Tshirts(driver)
+                .clickCheckBox_M()
+                .clickCheckBoxOrange()
+                .hoverAndClickProductByName("Faded Short Sleeve T-shirts")
+                .clickContinueShopping()
+                .hoverShoppingCart();
+        Assertions.assertEquals(2, Tshirts.countGoodsInCart());
+
     }
 
 

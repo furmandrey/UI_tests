@@ -15,7 +15,7 @@ public class Basic {
 
     public Basic(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }

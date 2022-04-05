@@ -1,6 +1,5 @@
 package com.geekbrains.lesson6;
 
-import com.geekbrains.lesson6.order.OrderSummary;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,15 +7,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class EveningDresses extends Basic {
-    public EveningDresses(WebDriver driver) {
+public class Tshirts extends Basic{
+    public Tshirts(WebDriver driver) {
         super(driver);
     }
 
     @FindBy(id = "layered_id_attribute_group_1")
     private WebElement checkBoxS;
 
-    public EveningDresses clickCheckBox_S() {
+    public Tshirts clickCheckBox_S() {
         checkBoxS.click();
         return this;
     }
@@ -24,7 +23,7 @@ public class EveningDresses extends Basic {
     @FindBy(id = "layered_id_attribute_group_2")
     private WebElement checkBoxM;
 
-    public EveningDresses clickCheckBox_M() {
+    public Tshirts clickCheckBox_M() {
         checkBoxM.click();
         return this;
     }
@@ -32,24 +31,24 @@ public class EveningDresses extends Basic {
     @FindBy(id = "layered_id_attribute_group_3")
     private WebElement checkBoxL;
 
-    public EveningDresses clickCheckBox_L() {
+    public Tshirts clickCheckBox_L() {
         checkBoxL.click();
         return this;
     }
 
-    @FindBy(id = "layered_id_attribute_group_7")
-    public WebElement checkBoxBeige;
+    @FindBy(id = "layered_id_attribute_group_13")
+    public WebElement checkBoxOrange;
 
-    public EveningDresses clickCheckBoxBeige() {
-        checkBoxBeige.click();
+    public Tshirts clickCheckBoxOrange() {
+        checkBoxOrange.click();
         return this;
     }
 
-    @FindBy(id = "layered_id_attribute_group_24")
-    private WebElement checkBoxPink;
+    @FindBy(id = "layered_id_attribute_group_14")
+    private WebElement checkBoxBlue;
 
-    public EveningDresses clickCheckBoxPink() {
-        checkBoxPink.click();
+    public Tshirts clickCheckBoxBlue() {
+        checkBoxBlue.click();
         return this;
     }
 
@@ -59,32 +58,38 @@ public class EveningDresses extends Basic {
     @FindBy(xpath = "//a[@title='Add to cart']")
     private WebElement addToCartAfterHover;
 
-    public EveningDresses hoverAndClickProductByName(String name) {
+    public Tshirts hoverAndClickProductByName(String name) {
         actions.moveToElement(productList.stream().filter(p -> p.getText().contains(name)).findFirst().get()).build().perform();
+        wait.until(ExpectedConditions.visibilityOf(addToCartAfterHover));
         addToCartAfterHover.click();
         return this;
     }
 
-    @FindBy(xpath = "//span[contains(., 'Proceed to checkout')]")
-    private WebElement buttonProceedToCheckout;
+    @FindBy(xpath = "//div[@class='shopping_cart']/a")
+    private WebElement shoppingCart;
 
-    public OrderSummary clickProceedToCheckout() {
-        wait.until(ExpectedConditions.visibilityOf(buttonProceedToCheckout));
-        buttonProceedToCheckout.click();
-        return new OrderSummary(driver);
+    public Tshirts hoverShoppingCart(){
+        actions.moveToElement(shoppingCart).build().perform();
+        return this;
     }
 
-    @FindBy(xpath = "//i[@class='icon-ok']/ancestor::h2")
-    public static WebElement confirmationText;
+    @FindBy(xpath = "//div[@class='cart-info']")
+    public static List<WebElement> goodsInCart;
+
+    public static int countGoodsInCart(){
+
+        int q = goodsInCart.size();
+        return q;
+    }
 
     @FindBy(xpath = "//span[@title='Continue shopping']")
     private WebElement buttonContinueShopping;
 
-    public EveningDresses clickButtonContinueShopping() {
+    public Tshirts clickContinueShopping(){
         wait.until(ExpectedConditions.visibilityOf(buttonContinueShopping));
         buttonContinueShopping.click();
         return this;
     }
 
-
 }
+
