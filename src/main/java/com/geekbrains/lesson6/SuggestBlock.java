@@ -1,6 +1,6 @@
 package com.geekbrains.lesson6;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +17,7 @@ public class SuggestBlock extends Basic {
     private List<WebElement> suggestBlockTitles;
 
     public SuggestBlock hoverSuggestBlockByName(String nameOfBlock) {
-        actions.moveToElement(suggestBlockTitles.stream().filter(s -> s.getAttribute("title")
+        actions.moveToElement(suggestBlockTitles.stream().filter(s -> s.getAttribute("title")//Вопрос 2
                 .contains(nameOfBlock)).findFirst().get()).build().perform();
         return this;
     }
