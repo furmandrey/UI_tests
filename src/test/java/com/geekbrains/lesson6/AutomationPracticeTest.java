@@ -82,7 +82,7 @@ public class AutomationPracticeTest {
                 .clickProceedToCheckout()
                 .clickProceedToCheckout()
                 .clickProceedToCheckout()
-                .clickcheckBoxTermsOfService()
+                .clickCheckBoxTermsOfService()
                 .clickProceedToCheckout()
                 .clickButtonPayByBankWire()
                 .clickButtonIConfirmMyOrder();
