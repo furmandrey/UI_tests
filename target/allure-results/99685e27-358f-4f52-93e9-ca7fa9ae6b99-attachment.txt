@@ -1,1 +1,0 @@
-https://connect.facebook.net/en_US/all.js?hash=784116a19a8c5e4dca9a691f1f51b21a 48:299 "Error retrieving login status, fetch cancelled."

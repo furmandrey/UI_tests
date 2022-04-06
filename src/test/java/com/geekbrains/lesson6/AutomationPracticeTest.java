@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -21,10 +22,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
 @Feature("Tests Adding to Cart")
 public class AutomationPracticeTest {
     WebDriver driver;
@@ -50,7 +51,9 @@ public class AutomationPracticeTest {
 
     @BeforeEach
     void setDriver() {
-        driver = new EventFiringDecorator(new CustomLogger()).decorate(new ChromeDriver());
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        driver = new EventFiringDecorator(new CustomLogger()).decorate(new ChromeDriver(chromeOptions));
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         actionProvider = new Actions(driver);
         driver.manage().window().maximize();
